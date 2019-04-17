@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback } from "react";
 
-export default function(callback) {
+export default function(callback, deps = []) {
   const mounted = useRef(false);
   useEffect(() => {
     mounted.current = true;
@@ -15,5 +15,5 @@ export default function(callback) {
       console.log("Skipping because not mounted");
     }
   };
-  return useCallback(whileMounted, [callback]);
+  return useCallback(whileMounted, [callback, ...deps]);
 }
