@@ -1,15 +1,15 @@
-import { useEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback } from "react";
 
 export default function(callback, deps = []) {
-  let mounted = false;
+  const mounted = useRef(false);
   useEffect(() => {
-    mounted = true;
+    mounted.current = true;
     return () => {
-      mounted = false;
+      mounted.current = false;
     };
   }, []);
   const whileMounted = (...args) => {
-    if (mounted) {
+    if (mounted.current) {
       return callback.apply(null, args);
     } else {
       console.log("Skipping because not mounted");
